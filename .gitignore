@@ -1,0 +1,29 @@
+# Node
+node_modules/
+.env
+*.log
+dist/
+build/
+
+# Bun
+.bun/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Go
+*.exe
+*.test
+*.out
+
+# Misc
+*.swp
+*.swo
+.idea/
+
+# Ignore local packages
+packages/*/node_modules/
