@@ -1,7 +1,6 @@
 {
   "name": "golang_boilerplate",
   "version": "1.0.0",
-  
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -13,10 +12,14 @@
     "clean": "turbo run clean && rimraf node_modules"
   },
   "packageManager": "bun@1.2.13",
-  "engines":{
+  "engines": {
     "node": ">=22"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "turbo": "^2.8.10",
+    "typescript": "^5.9.3"
+  }
 }

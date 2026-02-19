@@ -27,3 +27,6 @@ Thumbs.db
 
 # Ignore local packages
 packages/*/node_modules/
+
+golang-boilerplate
+
