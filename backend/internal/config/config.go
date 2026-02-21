@@ -16,6 +16,7 @@ type Config struct {
 	Database DatabaseConfig `koanf:"database" validate:"required"`
 	Auth     AuthConfig     `koanf:"auth" validate:"required"`
 	Redis    RedisConfig    `koanf:"redis" validate:"required"`
+	Observability *ObservabilityConfig `koanf:"observability" validate:"required"`//pointer since we can check if the config of observability are initialized or not if the zero value of the pointer is nill then not initialized
 }
 
 type Primary struct {
@@ -71,6 +72,18 @@ func LoadConfig() (*Config, error) {
 	err = validate.Struct(mainConfig)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("config validation failed")
+	}
+
+	if mainConfig.Observability == nil {
+		mainConfig.Observability = DefaultObservabilityConfig()//since of the reason i have mentionaed above to move back to default value if not initialized
+
+	}
+
+	mainConfig.Observability.ServiceName= "boilerplate" // Set default service name if not provided
+	mainConfig.Observability.Environment = mainConfig.Primary.Env // Set environment from primary config
+
+	if err := mainConfig.Observability.Validate(); err != nil {
+		logger.Fatal().Err(err).Msg("observability config validation failed")
 	}
 	return mainConfig, nil
 }
