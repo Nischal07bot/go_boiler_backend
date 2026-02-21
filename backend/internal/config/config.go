@@ -24,7 +24,7 @@ type Primary struct {
 }
 
 type ServerConfig struct {
-	Port               string   `koanf:"env" validate:"required"`
+	Port               string   `koanf:"port" validate:"required"`
 	ReadTimeout        int      `koanf:"read_timeout" validate:"required"`
 	WriteTimeout       int      `koanf:"write_timeout" validate:"required"`
 	IdleTimeout        int      `koanf:"idle_time" validate:"required"`
@@ -45,7 +45,7 @@ type DatabaseConfig struct {
 }
 
 type AuthConfig struct {
-	SecretKey string `koanf:"env" validate:"required"`
+	SecretKey string `koanf:"secretkey" validate:"required"`
 }
 
 type RedisConfig struct {
