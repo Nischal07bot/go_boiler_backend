@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"time"
+	"strings"
 
 	"github.com/Nischal07bot/go_boiler_backend/internal/config"
 	"github.com/newrelic/go-agent/v3/integrations/logcontext-v2/zerologWriter"
@@ -94,7 +95,8 @@ func NewLoggerWithService(cfg *config.ObservabilityConfig, ls *LoggerService) ze
 	case "error":
 		loglevel = zerolog.ErrorLevel
 	default:
-		loglevel = zerolog.InfoLevel
+		loglevel = zerolog.InfoLevel//storing zerlog.Inolevel since the variable loglevel
+		//will be further used by zerolog hence cant use string level since zerolog needs the log level in its own type
 	}
 
 	//dont set global log level since we want each logger its own level
@@ -129,4 +131,27 @@ func NewLoggerWithService(cfg *config.ObservabilityConfig, ls *LoggerService) ze
 	}
 	return logger
 
+}
+
+
+func WithTraceContext(logger zerolog.Logger, ctx *newrelic.Transaction) zerolog.Logger {
+	if ctx == nil {
+		return logger
+	}
+	//get trace metadata from the transaction 
+
+	metadata := ctx.GetTraceMetadata()
+
+	return logger.With().Str("trace.id", metadata.TraceID).Str("span.id", metadata.SpanID).Logger()
+}
+
+func FormatSQLWithArgs(sql string,args []any) string {
+	result := sql
+	for i, arg := range args {
+		placeholder := fmt.Sprintf("$%d", i+1)
+		value := fmt.Sprintf("'%v", arg)
+		result = strings.Replace(result,placeholder,value,1)
+	}
+
+	return result
 }

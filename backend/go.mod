@@ -8,7 +8,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/knadh/koanf/providers/env v1.1.0
 	github.com/knadh/koanf/v2 v2.3.2
-	github.com/newrelic/go-agent/v3 v3.42.0
+	github.com/newrelic/go-agent/v3 v3.41.0
 	github.com/rs/zerolog v1.34.0
 )
 
@@ -26,6 +26,8 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
+	github.com/newrelic/go-agent/v3/integrations/logcontext-v2/nrwriter v1.0.0 // indirect
+	github.com/newrelic/go-agent/v3/integrations/logcontext-v2/zerologWriter v1.0.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/crypto v0.46.0 // indirect
 	golang.org/x/net v0.47.0 // indirect
