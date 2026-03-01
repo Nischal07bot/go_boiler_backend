@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -135,7 +136,8 @@ func NewLoggerWithService(cfg *config.ObservabilityConfig, ls *LoggerService) ze
 
 
 func WithTraceContext(logger zerolog.Logger, ctx *newrelic.Transaction) zerolog.Logger {
-	if ctx == nil {
+	if ctx == nil {//transaction is a trace has a start and an end and basically keeps track of all the functions it touchs and 
+		
 		return logger
 	}
 	//get trace metadata from the transaction 
@@ -154,4 +156,30 @@ func FormatSQLWithArgs(sql string,args []any) string {
 	}
 
 	return result
+}
+
+func NewPgxLogger(level zerolog.Level) zerolog.Logger{
+	writer := zerolog.ConsoleWriter{
+		Out : os.Stdout,
+		TimeFormat: "2006-01-02 15:04:05",
+		FormatFieldValue: func(i any) string {
+			switch v := i.(type) {
+			case string:
+				if len(v) > 200 {
+					return v[:200]+"..."
+				}
+				return v
+			case []byte:
+				var obj interface{}
+				if err:= json.Unmarshal(v, &obj); err == nil {
+					pretty, _ := json.MarshalIndent(obj, "", "  ")
+					return "\n"+string(pretty)
+				}
+				return string(v)
+			default:
+				return fmt.Sprintf("%v", v)
+			}
+		},
+	}
+	return zerolog.New(writer).Level(level).With().Timestamp().Str("component","database").Logger()
 }
