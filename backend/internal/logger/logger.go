@@ -183,3 +183,18 @@ func NewPgxLogger(level zerolog.Level) zerolog.Logger{
 	}
 	return zerolog.New(writer).Level(level).With().Timestamp().Str("component","database").Logger()
 }
+
+func Getpgxtraceloglevel(level zerolog.Level) int {
+	switch level {
+	case zerolog.DebugLevel:
+		return 6//pgx log level for debug
+	case zerolog.InfoLevel:
+		return 4//pgx log level for info
+	case zerolog.WarnLevel:
+		return 3 //pgx log level for warn
+	case zerolog.ErrorLevel:
+		return 2 //pgx log level for error
+	default:
+		return 0 //tracelog.loglevel none
+	}
+}
