@@ -36,5 +36,22 @@ func NewJobService(logger *zerolog.Logger,cfg *config.Config) *Jobservice {
 		server: server,
 		Logger: *logger,
 	}
+}
 
+func (j *Jobservice) Start() error{
+	mux := asynq.NewServeMux()
+	mux.HandleFunc(TaskWelcome, j.handleWelcomeEmailTask)
+
+	j.Logger.Info().Msg("Starting background job server")
+	if err := j.server.Start(mux); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func(j *Jobservice) Stop() {
+	j.Logger.Info().Msg("Stopping background job server")
+	j.server.Shutdown()
+	j.Client.Close()
 }
