@@ -55,3 +55,35 @@ func(j *Jobservice) Stop() {
 	j.server.Shutdown()
 	j.Client.Close()
 }
+
+/*┌─────────────────────────────────────────────────────────────────┐
+│                        YOUR APPLICATION                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. User Signup Handler                                         │
+│     │                                                           │
+│     ▼                                                           │
+│  2. job.NewWelcomeEmailTask("john@email.com", "John")          │
+│     │         Creates task with payload                         │
+│     ▼                                                           │
+│  3. jobClient.Enqueue(task)                                     │
+│     │         Adds to Redis queue                               │
+│     │                                                           │
+├─────┼───────────────────────────────────────────────────────────┤
+│     │              REDIS QUEUE                                  │
+│     ▼                                                           │
+│  { "to": "john@email.com", "first_name": "John" }              │
+│                                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                      ASYNQ WORKER                               │
+│     │                                                           │
+│     ▼                                                           │
+│  4. handleWelcomeEmailTask()  ← Picks up task                  │
+│     │                                                           │
+│     ▼                                                           │
+│  5. emailClient.SendWelcomemail()                               │
+│     │                                                           │
+│     ▼                                                           │
+│  6. Email sent via Resend API                                   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘*/
