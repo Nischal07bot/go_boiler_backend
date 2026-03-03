@@ -16,6 +16,7 @@ type Config struct {
 	Database DatabaseConfig `koanf:"database" validate:"required"`
 	Auth     AuthConfig     `koanf:"auth" validate:"required"`
 	Redis    RedisConfig    `koanf:"redis" validate:"required"`
+	Integration Integration `koanf:"integration" validate:"required"`
 	Observability *ObservabilityConfig `koanf:"observability" validate:"required"`//pointer since we can check if the config of observability are initialized or not if the zero value of the pointer is nill then not initialized
 }
 
@@ -47,6 +48,9 @@ type DatabaseConfig struct {
 
 type AuthConfig struct {
 	SecretKey string `koanf:"secretkey" validate:"required"`
+}
+type Integration struct {
+	ResendApi string `koanf:"resend_api_key" validate:"required"`
 }
 
 type RedisConfig struct {
