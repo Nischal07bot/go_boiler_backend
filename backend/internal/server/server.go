@@ -99,6 +99,9 @@ func (s *Server) Start() error {
 	Msg("Starting server")
 
 	return s.httpServer.ListenAndServe()
+	/*ListenAndServe listens on the TCP network address s.Addr and then calls Serve to handle requests on incoming connections. Accepted connections are configured to enable TCP keep-alives.
+	If s.Addr is blank, ":http" is used.
+    ListenAndServe always returns a non-nil error. After Server.Shutdown or Server.Close, the returned error is ErrServerClosed.*/
 }
 
 func (s *Server) Shutdown(ctx context.Context) error {
