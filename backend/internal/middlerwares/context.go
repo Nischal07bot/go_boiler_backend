@@ -42,7 +42,6 @@ func (ce *ContextEnhancer) EnhanceContext() echo.MiddlewareFunc {
 			if txn := newrelic.FromContext(c.Request().Context()); txn != nil {
 				contextLogger = logger.WithTraceContext(contextLogger, txn)
 			}
-
 			// Extract user information from JWT token or session
 			if userID := ce.extractUserID(c); userID != "" {
 				contextLogger = contextLogger.With().Str("user_id", userID).Logger()
@@ -54,11 +53,9 @@ func (ce *ContextEnhancer) EnhanceContext() echo.MiddlewareFunc {
 
 			// Store the enhanced logger in context
 			c.Set(LoggerKey, &contextLogger)
-
 			// Create a new context with the logger
 			ctx := context.WithValue(c.Request().Context(), LoggerKey, &contextLogger)
 			c.SetRequest(c.Request().WithContext(ctx))
-
 			return next(c)
 		}
 	}
