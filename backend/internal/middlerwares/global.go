@@ -20,7 +20,7 @@ func NewGlobalMiddlewares(s *server.Server) *GlobalMiddlewares {
 	return &GlobalMiddlewares{
 		server: s,
 	}
-}
+}//constructor for global middlewares which takes a server as a dependency and returns a new instance of GlobalMiddlewares
 
 func (global *GlobalMiddlewares) CORS() echo.MiddlewareFunc {
 	return middleware.CORSWithConfig(middleware.CORSConfig{
