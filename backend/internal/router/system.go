@@ -7,5 +7,5 @@ import (
 )
 
 func registerSystemRoutes(r *echo.Echo, h *handler.Handlers) {
-
+	r.GET("/hello", h.Hello.Hello)
 }

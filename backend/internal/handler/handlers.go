@@ -6,10 +6,12 @@ import (
 )
 
 type Handlers struct {
-	
+	Hello *HelloHandler
 }
 
 func NewHandlers(s *server.Server, services *service.Services) *Handlers {
+	h := NewHandler(s)
 	return &Handlers{
+		Hello: NewHelloHandler(h),
 	}
 }
