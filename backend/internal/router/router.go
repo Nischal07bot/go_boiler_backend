@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Nischal07bot/go_boiler_backend/internal/handler"
-	"github.com/Nischal07bot/go_boiler_backend/internal/middlewares"
+	middlewares "github.com/Nischal07bot/go_boiler_backend/internal/middlerwares"
 	"github.com/Nischal07bot/go_boiler_backend/internal/server"
 	"github.com/Nischal07bot/go_boiler_backend/internal/service"
 	"github.com/labstack/echo/v4"

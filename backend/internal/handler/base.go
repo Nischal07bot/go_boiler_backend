@@ -3,12 +3,12 @@ package handler
 import (
 	"time"
 
+	middlewares "github.com/Nischal07bot/go_boiler_backend/internal/middlerwares"
+	"github.com/Nischal07bot/go_boiler_backend/internal/server"
+	"github.com/Nischal07bot/go_boiler_backend/internal/validation"
 	"github.com/labstack/echo/v4"
 	"github.com/newrelic/go-agent/v3/integrations/nrpkgerrors"
 	"github.com/newrelic/go-agent/v3/newrelic"
-	"github.com/Nischal07bot/go_boiler_backend/internal/middlewares"
-	"github.com/Nischal07bot/go_boiler_backend/internal/server"
-	"github.com/Nischal07bot/go_boiler_backend/internal/validation"
 )
 
 // Handler provides base functionality for all handlers
@@ -122,14 +122,14 @@ func handleRequest[Req validation.Validatable](
 		Str("method", method).
 		Str("path", path).
 		Str("route", route)
-	
+
 	// Add file-specific fields to logger if it's a file handler
 	if fileHandler, ok := responseHandler.(FileResponseHandler); ok {
 		loggerBuilder = loggerBuilder.
 			Str("filename", fileHandler.filename).
 			Str("content_type", fileHandler.contentType)
 	}
-	
+
 	logger := loggerBuilder.Logger()
 
 	// user.id is already set by tracing middleware
