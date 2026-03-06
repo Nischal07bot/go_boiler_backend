@@ -168,7 +168,6 @@ func HandleError(err error) error {
 		switch sqlErr.Code {
 		case ForeignKeyViolation:
 			return errs.NewBadRequestError(userMessage, false, &errorCode, nil, nil)
-
 		case UniqueViolation:
 			columnName := extractColumnForUniqueViolation(sqlErr.ConstraintName)
 			if columnName != "" {
